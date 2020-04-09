@@ -14,16 +14,19 @@ class Game:
 
 # prints game instructions
     def print_instruction(self):
-        print('\nWelcome to the Guessing Game!')
-        print("\nYou will have three chances to guess the computer's number.")
-        print("\nWith each guess, you'll lose a point and receive a hint.")
+        print('\n__Welcome to the Guessing Game!__')
+        print("You will have three chances to guess the computer's number.")
+        print("With each guess you'll lose a point and receive a hint.")
         print("\n")
 
 # turns string answers into numbers
     def switch(self, arg):
         switch = {'zero':0, 'one':1, 'two':2, 'three':3, 'four':4, 'five':5,
             'six':6, 'seven':7, 'eight':8, 'nine':9, 'ten':10}
-        return switch.get(arg.lower(), arg)
+        if arg in switch.keys():
+            return switch.get(arg)
+        else:
+            return int(arg)
 
     def guess_number(self, player_name, score_list):
         computer_guess= random.randint(1,9)
@@ -33,7 +36,7 @@ class Game:
         for tries in range(3):
             while True:
                 try:
-                    user_input = int(input('Guess a number between 1 thru 9. '))
+                    user_input = self.switch(input('Guess a number between 1 thru 9. '))
                     if user_input in range(1,10):
                         break
                     else:
@@ -47,7 +50,7 @@ class Game:
             else:
                 break
         if user_input == computer_guess:
-            print('Congratulations {}! YOU GUESSED RIGHT!'.format(player_name.upper()))
+            print('Congratulations {}! YOU GUESSED IT!'.format(player_name.upper()))
             score = int(3-tries)
             score_list.append(score)
         else:
